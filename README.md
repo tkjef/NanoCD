@@ -109,3 +109,23 @@ portions MIT © [tkjef][tkjef]
 [license]: https://github.com/4-9s/nanocd/blob/master/LICENSE
 [twitter]: https://twitter.com/4-9s_io
 [website]: http://www.4-9s.io/
+
+## Project Roadmap
+
+Version 0.9.0  
+    -CD env promotion option  
+
+Version 1.0.0  
+    -automated or manual rollback  
+    -step-based full deployment (build, infra, config management, app deploy)  
+    -reliable health check tests  
+
+Version 1.1.0  
+    -option to run Locust load tests on env deploy  
+
+Version 1.2.0  
+    -allows for ease of using github as an artifact repository w/ tags/releases
+    -options for Artifactory and Nexus  
+
+Version 1.3.0
+    -use parallels to allow concurrency  
