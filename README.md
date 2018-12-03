@@ -93,7 +93,7 @@ After pull request is merged run the below:
 
 ## Authors
 
-Maintained by [tkjef][tkjef] (<yo@tkjef.com>) and a growing community of [contributors][contributors]. Forked from [ianmiell][ianmiell].
+Maintained by [tkjef][tkjef] (<yo@tkjef.com>) and a growing community of [contributors][contributors]. Forked from [cheapci][cheapci].
 
 ## License
 
@@ -104,6 +104,7 @@ portions MIT © [tkjef][tkjef]
 [contributors]: https://github.com/4-9s/nanocd/graphs/contributors
 [tkjef]: https://github.com/tkjef
 [ianmiell]: https://github.com/ianmiell
+[cheapci]: https://github.com/ianmiell/cheapci
 [issues]: https://github.com/4-9s/nanocd/issues
 [license]: https://github.com/4-9s/nanocd/blob/master/LICENSE
 [twitter]: https://twitter.com/4-9s_io
