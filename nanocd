@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# NanoCI
+# NanoCD
 
 set -o pipefail
 set -o nounset
@@ -52,17 +52,17 @@ OPTIONAL ARGS:
 
 EXAMPLES
 
-- "Clone -r https://github.com/seeeye/sessh.git if a git pull on /space/git/sessh indicates there's been an update.
+- "Clone -r https://github.com/4-9s/sessh.git if a git pull on /space/git/sessh indicates there's been an update.
   Then navigate to test, run ./test.sh and mail yo@tkjef.com if there are any issues"
 
-  ./nanoci -r https://github.com/seeeye/sessh.git -l /space/git/sessh -d test -c ./test.sh -m yo@tkjef.com
+  ./nanocd -r https://github.com/4-9s/sessh.git -l /space/git/sessh -d test -c ./test.sh -m yo@tkjef.com
 
 
 - "Run this continuously in a crontab."
 
   Crontab line:
 
-  * * * * * cd /path/to/nanoci && ./nanoci -r https://github.com/seeeye/sessh.git -l /space/git/sessh -d test -c ./test.sh -m yo@tkjef.com
+  * * * * * cd /path/to/nanocd && ./nanocd -r https://github.com/4-9s/sessh.git -l /space/git/sessh -d test -c ./test.sh -m yo@tkjef.com
 END
 }
 
