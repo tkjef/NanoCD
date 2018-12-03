@@ -1,14 +1,14 @@
-NanoCI
+NanoCD
 =======
 
-NanoCI framework in bash. Checks whether there have been any updates, runs tests 
-and mails you on completion.
+NanoCD framework in bash. Checks git for updates, deploys code, runs tests, mails you on completion.  
+Allows for promotion to next env.  
 
-Usage:
+Usage:  
 
 ```
-$ ./nanoci 
-./nanoci [-q <pre-script>] [-w <post-script>] [-m <email>] [-a <mail command>]
+$ ./nanocd
+./nanocd [-q <pre-script>] [-w <post-script>] [-m <email>] [-a <mail command>]
    [-t <mail command attach flag>] [-s <mail command subject flag]
    [-e <recipients flag>] [-n name] [-d <dir>] [-c <command>] [-f] [-v] [-h]
    -r <repo> -l <local_checkout>
@@ -35,7 +35,7 @@ EXAMPLES
 indicates there's been an update. Then navigate to test, run ./test.sh and mail 
 yo@tkjef.com if there are any issues"
 
-./nanoci \
+./nanocd \
       -r https://github.com/tkjef/somerepo.git \
       -l /space/git/somerepo \
       -d test \
@@ -47,20 +47,20 @@ yo@tkjef.com if there are any issues"
 
   Crontab line:
 
-* * * * * cd /path/to/nanoci && ./nanoci -r https://github.com/tkjef/somerepo.git -l /space/git/somerepo -d test -c ./test.sh -m yo@tkjef.com
+* * * * * cd /path/to/nanocd && ./nanocd -r https://github.com/tkjef/somerepo.git -l /space/git/somerepo -d test -c ./test.sh -m yo@tkjef.com
 
-- "Test nanoci with nanoci"
+- "Test nanocd with nanocd"
 
-./nanoci \
+./nanocd \
      -q "ls -l" \
      -w "ls -l" \
      -m yo@tkjef.com \
-     -n nanoci \
+     -n nanocd \
      -d . \
      -c /bin/true \
      -v \
-     -r https://github.com/tkjef/nanoci \
-     -l /space/git/nanoci \
+     -r https://github.com/4-9s/nanocd \
+     -l /space/git/nanocd \
      -f
 
 ```
@@ -76,7 +76,7 @@ If you haven't already:
 2. Clone your forked repo
 
 Inside cloned repo directory run the below:
-1. `git remote add upstream https://github.com/seeeye/nanoci.git`
+1. `git remote add upstream https://github.com/4-9s/nanocd.git`
 2. `git fetch upstream`
 3. `git checkout master`
 4. `git rebase upstream/master`
@@ -101,10 +101,10 @@ MIT License, (see [LICENSE][license])
 MIT © [ianmiell][ianmiell]  
 portions MIT © [tkjef][tkjef]  
 
-[contributors]: https://github.com/seeeye/nanoci/graphs/contributors
+[contributors]: https://github.com/4-9s/nanocd/graphs/contributors
 [tkjef]: https://github.com/tkjef
 [ianmiell]: https://github.com/ianmiell
-[issues]: https://github.com/seeeye/nanoci/issues
-[license]: https://github.com/seeeye/nanoci/blob/master/LICENSE
-[twitter]: https://twitter.com/seeeye_io
-[website]: http://www.seeeye.io/
+[issues]: https://github.com/4-9s/nanocd/issues
+[license]: https://github.com/4-9s/nanocd/blob/master/LICENSE
+[twitter]: https://twitter.com/4-9s_io
+[website]: http://www.4-9s.io/
