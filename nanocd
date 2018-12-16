@@ -193,17 +193,17 @@ then
     gtimeout $TIMEOUT_S $TEST_COMMAND 2>&1 | tee -a $LOG_FILE # Install gtimeout with 'brew install coreutils'
     EXIT_CODE=$?
     if [[ $EXIT_CODE -ne 0 ]]
-	then
-		if [[ $EXIT_CODE -eq 124 ]]
-		then
+    then
+        if [[ $EXIT_CODE -eq 124 ]]
+        then
             msg="Tests (TIMEOUT) for project:$PROJECT_NAME on host:$(hostname)"
             echo $msg
-		else
+        else
             msg="Tests for project:$PROJECT_NAME on host:$(hostname) FAILED"
             echo $msg
-		fi
-	else
+        fi
+    else
         msg="Build, deploy & tests for project:$PROJECT_NAME on host:$(hostname) SUCCESSFUL"
-	fi
+    fi
     send_mail $msg
 fi
