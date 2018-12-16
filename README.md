@@ -4,65 +4,52 @@ NanoCD
 NanoCD framework in bash. Checks git for updates, deploys code, runs tests, mails you on completion.  
 Allows for promotion to next env.  
 
+Dependencies:  
+```
+Install parallel with 'brew install parallel'
+Install gtimeout with 'brew install coreutils'
+```
+
 Usage:  
 
 ```
-$ ./nanocd
-./nanocd [-q <pre-script>] [-w <post-script>] [-m <email>] [-a <mail command>]
-   [-t <mail command attach flag>] [-s <mail command subject flag]
-   [-e <recipients flag>] [-n name] [-d <dir>] [-c <command>] [-f] [-v] [-h]
-   -r <repo> -l <local_checkout>
+$ nanocd
+nanocd -r <repo> -l <local_checkout> [-b <build-script>] [-w <post-script>]
+   [-m <email>] [-a <mail command>] [-t <mail command attach flag>]
+   [-s <mail command subject flag] [-e <recipients flag>] [-n name] [-d <dir>] 
+   [-c <command>] [-f] [-v] [-h]
 
--q - script to run just before actually performing test (default /bin/true)
--w - script to run just after actually performing test (default /bin/true)
--m - email to send using "mail" command (default logs to stdout)
--a - mail command to use (default=mail)
--n - name for ci (unique, must be a valid directory name), eg myproj (default=ci)
--d - directory within repository to navigate to (default=.)
--c - test command to run from -d directory (default=./test.sh)
--t - attach argument flag for mail command (default=-A, empty string means no-attach)
--s - subject flag for mail command (default=-s)
--e - recipients flag (default=-t, empty string means no flag needed)
+REQUIRED ARGS:
+-r - git repository, eg https://github.com/myname/myproj.git (required)
+-l - local checkout of code (that gets updated to determine whether a run is needed) (required)
+
+OPTIONAL ARGS:
+-b - build script to run (default $BUILD_SCRIPT)
+-w - script to run just after actually performing test (default $DEPLOY_SCRIPT)
+-m - email address to send to using "mail" command (default logs to stdout)
+-a - mail command to use (default=$MAIL_CMD)
+-n - name for ci (unique, must be a valid directory name), eg myproj (default=$PROJECT_NAME)
+-d - directory within repository that contains test scripts (default=$TEST_DIR)
+-c - test command to run from -d directory (default=$TEST_COMMAND)
+-t - attach argument flag for mail command (default=$MAIL_CMD_ATTACH_FLAG, empty string means no-attach)
 -f - force a run even if repo has no updates (default off)
 -v - verbose logging (default off)
+-i - timeout in seconds (default 86400, ie one day, does KILL one hour after that)
 -h - show help
--r - git repository, eg https://github.com/myname/myproj (required)
--l - local checkout of code (that gets updated to determine whether a run is needed) (required)
 
 EXAMPLES
 
-- "Clone -r https://github.com/tkjef/somerepo.git if a git pull on /space/git/somerepo 
-indicates there's been an update. Then navigate to test, run ./test.sh and mail 
-yo@tkjef.com if there are any issues"
+- "Clone -r https://github.com/myname/myproj.git if a git fetch on /path/to/git/root/ indicates there's been an update.
+  Then navigate to tests (default), run ./test.sh and mail your@email.tld after successfull or failed completion with results"
 
-./nanocd \
-      -r https://github.com/tkjef/somerepo.git \
-      -l /space/git/somerepo \
-      -d test \
-      -c ./test.sh \
-      -m yo@tkjef.com
+  nanocd -r https://github.com/myname/myproj.git -l /path/to/git/root/ -d tests -c ./test.sh -m your@email.tld
+  nanocd -r https://github.com/myname/myproj.git -l /path/to/git/root/ -m your@email.tld
+  nanocd -r https://github.com/myname/myproj.git -l /path/to/git/root/
 
+- "Run this continuously in a crontab."
 
-- "Run the above continuously in a crontab."
-
-  Crontab line:
-
-* * * * * cd /path/to/nanocd && ./nanocd -r https://github.com/tkjef/somerepo.git -l /space/git/somerepo -d test -c ./test.sh -m yo@tkjef.com
-
-- "Test nanocd with nanocd"
-
-./nanocd \
-     -q "ls -l" \
-     -w "ls -l" \
-     -m yo@tkjef.com \
-     -n nanocd \
-     -d . \
-     -c /bin/true \
-     -v \
-     -r https://github.com/4-9s/nanocd \
-     -l /space/git/nanocd \
-     -f
-
+  Crontab line to run every 30 min:
+  0,30 * * * * nanocd -r https://github.com/myname/myproj.git -l /path/to/git/root/
 ```
 
 ## Development
@@ -117,7 +104,6 @@ Version 0.9.0
 
 Version 1.0.0  
     -automated or manual rollback  
-    -step-based full deployment (build, infra, config management, app deploy)  
     -reliable health check tests  
 
 Version 1.1.0  
@@ -126,6 +112,3 @@ Version 1.1.0
 Version 1.2.0  
     -allows for ease of using github as an artifact repository w/ tags/releases
     -options for Artifactory and Nexus  
-
-Version 1.3.0
-    -use parallels to allow concurrency  
