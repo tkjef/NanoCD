@@ -122,7 +122,6 @@ function cleanup() {
     rm -f $LOCK_FILE
     # get rid of /tmp detritus, leaving anything accessed 2 days ago+
     find $BUILD_DIR_BASE -type d -atime +1 | xargs rm -rf
-    echo $msg
     echo "cleanup done"
 }
 
@@ -168,13 +167,13 @@ then
 	touch $LOG_FILE
 
     # Step #2: In local repo master branch update with latest changes
-	echo "Pulling" | tee -a $LOG_FILE
-	git pull origin master 2>&1 | tee -a $LOG_FILE
-
-	# Step #3: In /tmp build directory, clone to PROJECT_NAME, run build script
-	cd $BUILD_DIR
-	git clone $REPO $PROJECT_NAME
-	$BUILD_SCRIPT 2>&1 | tee -a $LOG_FILE
+    echo "Pulling" | tee -a $LOG_FILE
+    git pull origin master 2>&1 | tee -a $LOG_FILE
+    
+    # Step #3: In /tmp build directory, clone to PROJECT_NAME, run build script
+    cd $BUILD_DIR
+    git clone $REPO $PROJECT_NAME
+    $BUILD_SCRIPT 2>&1 | tee -a $LOG_FILE
     if [[ $? -ne 0 ]]
 	then
 		msg="Build script for project:$PROJECT_NAME on host:$(hostname) FAILED"
@@ -182,7 +181,7 @@ then
 	fi
 
     # Step #4: Run deploy script
-	$DEPLOY_SCRIPT 2>&1 | tee -a "$LOG_FILE"
+    $DEPLOY_SCRIPT 2>&1 | tee -a "$LOG_FILE"
     if [[ $? -ne 0 ]]
 	then
 		msg="Deploy script for project:$PROJECT_NAME on host:$(hostname) FAILED"
@@ -190,18 +189,18 @@ then
 	fi
 
     # Step #5: Run test script(s)
-	cd "${BUILD_DIR}${PROJECT_NAME}/${TEST_DIR}"
-	gtimeout $TIMEOUT_S $TEST_COMMAND 2>&1 | tee -a $LOG_FILE # Install gtimeout with 'brew install coreutils'
-	EXIT_CODE=$?
+    cd "${BUILD_DIR}${PROJECT_NAME}/${TEST_DIR}"
+    gtimeout $TIMEOUT_S $TEST_COMMAND 2>&1 | tee -a $LOG_FILE # Install gtimeout with 'brew install coreutils'
+    EXIT_CODE=$?
     if [[ $EXIT_CODE -ne 0 ]]
 	then
 		if [[ $EXIT_CODE -eq 124 ]]
 		then
-			msg="Tests (TIMEOUT) for project:$PROJECT_NAME on host:$(hostname)"
-	        echo $msg
+            msg="Tests (TIMEOUT) for project:$PROJECT_NAME on host:$(hostname)"
+            echo $msg
 		else
-			msg="Tests for project:$PROJECT_NAME on host:$(hostname) FAILED"
-	        echo $msg
+            msg="Tests for project:$PROJECT_NAME on host:$(hostname) FAILED"
+            echo $msg
 		fi
 	else
         msg="Build, deploy & tests for project:$PROJECT_NAME on host:$(hostname) SUCCESSFUL"
