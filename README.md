@@ -63,7 +63,7 @@ If you haven't already:
 2. Clone your forked repo
 
 Inside cloned repo directory run the below:
-1. `git remote add upstream https://github.com/4-9s/nanocd.git`
+1. `git remote add upstream https://github.com/tkjef/nanocd.git`
 2. `git fetch upstream`
 3. `git checkout master`
 4. `git rebase upstream/master`
@@ -88,14 +88,14 @@ MIT License, (see [LICENSE][license])
 MIT © [ianmiell][ianmiell]  
 portions MIT © [tkjef][tkjef]  
 
-[contributors]: https://github.com/4-9s/nanocd/graphs/contributors
+[contributors]: https://github.com/tkjef/nanocd/graphs/contributors
 [tkjef]: https://github.com/tkjef
 [ianmiell]: https://github.com/ianmiell
 [cheapci]: https://github.com/ianmiell/cheapci
-[issues]: https://github.com/4-9s/nanocd/issues
-[license]: https://github.com/4-9s/nanocd/blob/master/LICENSE
-[twitter]: https://twitter.com/4-9s_io
-[website]: http://www.4-9s.io/
+[issues]: https://github.com/tkjef/nanocd/issues
+[license]: https://github.com/tkjef/nanocd/blob/master/LICENSE
+[twitter]: https://twitter.com/tkjef
+[website]: http://www.tkjef.com/
 
 ## Project Roadmap
 
