@@ -163,9 +163,10 @@ fi
 ~/.nanocd/prs/merge_pr 2>&1 | tee -a $LOG_FILE
 if [[ $? -ne 0 ]]
 then
-    msg="Pull request creation for project:$PROJECT_NAME on host:$(hostname) FAILED"
+    msg="Merge pull request for project:$PROJECT_NAME on host:$(hostname) FAILED"
     echo $msg
 fi
+
 
 # Step #1: Check if there are any new merged pull requests on the remote master branch
 touch $LOCK_FILE
