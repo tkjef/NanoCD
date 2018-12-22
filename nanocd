@@ -153,6 +153,20 @@ fi
 trap cleanup TERM INT QUIT EXIT
 
 
+# Step #0: Create pull request & merge to master
+~/.nanocd/prs/create_pr 2>&1 | tee -a $LOG_FILE
+if [[ $? -ne 0 ]]
+then
+    msg="Pull request creation for project:$PROJECT_NAME on host:$(hostname) FAILED"
+    echo $msg
+fi
+~/.nanocd/prs/merge_pr 2>&1 | tee -a $LOG_FILE
+if [[ $? -ne 0 ]]
+then
+    msg="Pull request creation for project:$PROJECT_NAME on host:$(hostname) FAILED"
+    echo $msg
+fi
+
 # Step #1: Check if there are any new merged pull requests on the remote master branch
 touch $LOCK_FILE
 cd $LOCAL_CHECKOUT
