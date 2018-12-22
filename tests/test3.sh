@@ -1,5 +1,9 @@
 #!/bin/bash
 
+printf "\n\n"
+echo "STARTING NANOCD TEST ON TEST REPO"
+printf "\n\n"
+
 DATE=`date +"%Y-%m-%d-%H-%M"`
 FEATURE_BRANCH=$(git branch 2>/dev/null | grep '^*' | colrm 1 2)
 
