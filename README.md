@@ -5,8 +5,8 @@ NanoCD framework in bash. Checks git for updates, deploys code, runs tests, mail
 Allows for promotion to next env.  
 
 Dependencies:  
+Install parallel, timeout + hub  with the below:  
 ```
-Install parallel, timeout + hub  with the below:
 brew install parallel
 brew install coreutils
 brew install hub
@@ -19,7 +19,7 @@ $ nanocd
 nanocd -r <repo> -l <local_checkout> [-b <build-script>] [-w <post-script>]
    [-m <email>] [-a <mail command>] [-t <mail command attach flag>]
    [-s <mail command subject flag] [-e <recipients flag>] [-n name] [-d <dir>] 
-   [-c <command>] [-f] [-v] [-h]
+   [-c <command>] [-f] [-v] [-h] [-p]
 
 REQUIRED ARGS:
 -r - git repository, eg https://github.com/myname/myproj.git (required)
@@ -36,6 +36,7 @@ OPTIONAL ARGS:
 -t - attach argument flag for mail command (default=$MAIL_CMD_ATTACH_FLAG, empty string means no-attach)
 -f - force a run even if repo has no updates (default off)
 -v - verbose logging (default off)
+-p - create pull request, merge pull request, set -f flag
 -i - timeout in seconds (default 86400, ie one day, does KILL one hour after that)
 -h - show help
 
