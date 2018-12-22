@@ -4,7 +4,7 @@ printf "\n\n"
 echo "STARTING NANOCD TEST ON TEST REPO"
 printf "\n"
 
-TEST_DIR='~/nano-test/'
+TEST_DIR='~/nano_test/'
 DATE=`date +"%Y-%m-%d-%H-%M"`
 FEATURE_BRANCH=$(git branch 2>/dev/null | grep '^*' | colrm 1 2)
 
