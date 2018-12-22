@@ -6,8 +6,10 @@ Allows for promotion to next env.
 
 Dependencies:  
 ```
-Install parallel with 'brew install parallel'
-Install gtimeout with 'brew install coreutils'
+Install parallel, timeout + hub  with the below:
+brew install parallel
+brew install coreutils
+brew install hub
 ```
 
 Usage:  
