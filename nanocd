@@ -7,6 +7,7 @@ set -o nounset
 
 # Defaults
 FORCE=0
+PR_FLAG=0
 VERBOSE=0
 REPO=""                                 # Set with -r option or can be hard-coded here
 LOCAL_CHECKOUT=""                       # Set with -l option or can be hard-coded here
@@ -28,7 +29,7 @@ cat > /dev/stdout << END
 ${0} -r <repo> -l <local_checkout> [-b <build-script>] [-w <deploy-script>]
    [-m <email>] [-a <mail command>] [-t <mail command attach flag>]
    [-s <mail command subject flag] [-e <recipients flag>] [-n name] [-d <dir>] 
-   [-c <command>] [-f] [-v] [-h]
+   [-c <command>] [-f] [-v] [-h] [-p]
 
 REQUIRED ARGS:
 -r - git repository, eg https://github.com/myname/myproj.git (required)
@@ -45,6 +46,7 @@ OPTIONAL ARGS:
 -t - attach argument flag for mail command (default=$MAIL_CMD_ATTACH_FLAG, empty string means no-attach)
 -f - force a run even if repo has no updates (default off)
 -v - verbose logging (default off)
+-p - create pull request, merge pull request, set -f flag
 -i - timeout in seconds (default 86400, ie one day, does KILL one hour after that)
 -h - show help
 
@@ -66,7 +68,7 @@ END
 
 
 # Override defaults with commandline flags + options/arguments
-while getopts "h?vfm:n:d:r:l:c:a:b:w:t:e:s:" opt
+while getopts "h?vfpm:n:d:r:l:c:a:b:w:t:e:s:" opt
 do
     case $opt in
         h|\?)
@@ -75,6 +77,7 @@ do
             ;;
         v) VERBOSE=1 ;;
         f) FORCE=1 ;;
+        p) PR_FLAG=1 ;;
         r) REPO=$OPTARG ;;
         m) EMAIL=$OPTARG ;;
         n) PROJECT_NAME=$OPTARG ;;
@@ -153,18 +156,22 @@ fi
 trap cleanup TERM INT QUIT EXIT
 
 
-# Step #0: Create pull request & merge to master
-~/.nanocd/prs/create_pr 2>&1 | tee -a $LOG_FILE
-if [[ $? -ne 0 ]]
+# Step #0: Create pull request & merge to master if -pr flag is set
+if [[ $PR_FLAG -gt 0 ]]
 then
-    msg="Pull request creation for project:$PROJECT_NAME on host:$(hostname) FAILED"
-    echo $msg
-fi
-~/.nanocd/prs/merge_pr 2>&1 | tee -a $LOG_FILE
-if [[ $? -ne 0 ]]
-then
-    msg="Merge pull request for project:$PROJECT_NAME on host:$(hostname) FAILED"
-    echo $msg
+    ~/.nanocd/prs/create_pr 2>&1 | tee -a $LOG_FILE
+    if [[ $? -ne 0 ]]
+    then
+        msg="Pull request creation for project:$PROJECT_NAME on host:$(hostname) FAILED"
+        echo $msg
+    fi
+    ~/.nanocd/prs/merge_pr 2>&1 | tee -a $LOG_FILE
+    if [[ $? -ne 0 ]]
+    then
+        msg="Merge pull request for project:$PROJECT_NAME on host:$(hostname) FAILED"
+        echo $msg
+    fi
+    FORCE=1
 fi
 
 
