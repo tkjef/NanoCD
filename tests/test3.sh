@@ -4,11 +4,12 @@ printf "\n\n"
 echo "STARTING NANOCD TEST ON TEST REPO"
 printf "\n"
 
+TEST_DIR='~/nano-test/'
 DATE=`date +"%Y-%m-%d-%H-%M"`
 FEATURE_BRANCH=$(git branch 2>/dev/null | grep '^*' | colrm 1 2)
 
-cp ../nanocd /usr/local/bin/nanocd
-cd ~/nano_test/
+cp nanocd /usr/local/bin/nanocd
+cd $TEST_DIR
 git checkout -b $DATE
 touch ${DATE}_test.txt
 git add . && git add *
