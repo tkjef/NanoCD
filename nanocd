@@ -169,7 +169,7 @@ fi
 trap cleanup TERM INT QUIT EXIT
 
 
-# Step #0: Create pull request & merge to master if -pr flag is set
+# Step #0: Create pull request & merge to master if -p flag is set
 if [[ $PR_FLAG -gt 0 ]]
 then
     create_pr 2>&1 | tee -a $LOG_FILE
