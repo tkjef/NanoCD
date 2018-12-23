@@ -116,5 +116,5 @@ Version 1.1.0
     -option to run Locust load tests on env deploy  
 
 Version 1.2.0  
-    -allows for ease of using github as an artifact repository w/ tags/releases
+    -allows for ease of using github as an artifact repository w/ tags/releases  
     -options for Artifactory and Nexus  
