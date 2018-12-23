@@ -4,16 +4,19 @@ NanoCD
 NanoCD framework in bash for Mac. Checks git for updates, deploys code, runs tests, mails you on completion.  
 Allows for promotion to next env.  
 
-Dependencies for Mac:  
-Install parallel, timeout + hub  with the below:  
+Dependencies for Mac. Install parallel, timeout + hub with the below:  
 ```
 brew install parallel
 brew install coreutils
 brew install hub
 ```
 
-Usage:  
+NanoCD Installation:  
+```
+(cd /usr/local/bin && curl -O https://github.com/tkjef/NanoCD/blob/master/nanocd)
+```
 
+Usage:  
 ```
 $ nanocd
 nanocd -r <repo> -l <local_checkout> [-b <build-script>] [-w <post-script>]
