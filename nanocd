@@ -142,6 +142,19 @@ function send_mail() {
     fi
 }
 
+function create_pr() {
+    FEATURE_BRANCH=$(git branch 2>/dev/null | grep '^*' | colrm 1 2)
+    hub pull-request -b master -h $FEATURE_BRANCH     # Install hub with 'brew install hub'
+}
+
+function merge_pr() {
+    PR_NUMBER=$(hub pr list L|awk {'print $1'}|cut -d# -f2)
+    git checkout master
+    git fetch origin refs/pull/$PR_NUMBER/head
+    git merge FETCH_HEAD --no-ff -m "Merge pull request #$PR_NUMBER"
+    git push
+}
+
 
 # Add date to build log file, check lock file exists
 date 2>&1 | tee -a $BUILD_LOG_FILE
@@ -159,13 +172,13 @@ trap cleanup TERM INT QUIT EXIT
 # Step #0: Create pull request & merge to master if -pr flag is set
 if [[ $PR_FLAG -gt 0 ]]
 then
-    ~/.nanocd/prs/create_pr 2>&1 | tee -a $LOG_FILE
+    create_pr 2>&1 | tee -a $LOG_FILE
     if [[ $? -ne 0 ]]
     then
         msg="Pull request creation for project:$PROJECT_NAME on host:$(hostname) FAILED"
         echo $msg
     fi
-    ~/.nanocd/prs/merge_pr 2>&1 | tee -a $LOG_FILE
+    merge_pr 2>&1 | tee -a $LOG_FILE
     if [[ $? -ne 0 ]]
     then
         msg="Merge pull request for project:$PROJECT_NAME on host:$(hostname) FAILED"
@@ -212,7 +225,7 @@ then
 
     # Step #5: Run test script(s)
     cd "${BUILD_DIR}${PROJECT_NAME}/${TEST_DIR}"
-    gtimeout $TIMEOUT_S $TEST_COMMAND 2>&1 | tee -a $LOG_FILE # Install gtimeout with 'brew install coreutils'
+    gtimeout $TIMEOUT_S $TEST_COMMAND 2>&1 | tee -a $LOG_FILE     # Install gtimeout with 'brew install coreutils'
     EXIT_CODE=$?
     if [[ $EXIT_CODE -ne 0 ]]
     then
