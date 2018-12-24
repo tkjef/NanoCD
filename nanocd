@@ -148,7 +148,7 @@ function create_pr() {
 }
 
 function merge_pr() {
-    PR_NUMBER=$(hub pr list L|awk {'print $1'}|cut -d# -f2)
+    PR_NUMBER=$(hub pr list L|head -1|awk {'print $1'}|cut -d# -f2)
     git checkout master
     git fetch origin refs/pull/$PR_NUMBER/head
     git merge FETCH_HEAD --no-ff -m "Merge pull request #$PR_NUMBER"
