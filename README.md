@@ -105,16 +105,29 @@ portions MIT © [tkjef][tkjef]
 
 ## Project Roadmap
 
-Version 0.9.0  
-    -CD env promotion option  
+Version 0.4  
+    -add automatic Version tagging with Github  
 
-Version 1.0.0  
-    -automated or manual rollback  
-    -reliable health check tests  
+Version 0.5  
+    -add better integrity check on pull request being used to cover any edge cases  
+    -add artifact versioning using Github, Artifactory or Nexus  
 
-Version 1.1.0  
-    -option to run Locust load tests on env deploy  
+Version 0.6  
+    -add rollback to previous version or specific version capability
 
-Version 1.2.0  
-    -allows for ease of using github as an artifact repository w/ tags/releases  
-    -options for Artifactory and Nexus  
+Version 0.7  
+    -set generic deploy script to aws s3 that only uploads files that were added/edited,  
+    removes files that were removed  
+    -add better testing options  
+
+Version 0.8  
+    -add automatic promotion to envs, deploy to specific env  
+
+Version 0.9  
+    -add mute/unmute alerts option  
+
+Version 1.0  
+    -polish step-based workflow  
+
+Version 1.1  
+    -add advanced load test templates  
