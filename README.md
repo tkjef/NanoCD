@@ -113,7 +113,7 @@ Version 0.5
     -add artifact versioning using Github, Artifactory or Nexus  
 
 Version 0.6  
-    -add rollback to previous version or specific version capability
+    -add rollback to previous version or specific version capability  
 
 Version 0.7  
     -set generic deploy script to aws s3 that only uploads files that were added/edited,  
@@ -122,9 +122,11 @@ Version 0.7
 
 Version 0.8  
     -add automatic promotion to envs, deploy to specific env  
+    -add slack alerts  
 
 Version 0.9  
-    -add mute/unmute alerts option  
+    -add mute/unmute monitoring alerts option for:  
+    datadog, newrelic, grafana, pagerduty, opsgenie, victorops or custom script.  
 
 Version 1.0  
     -polish step-based workflow  
