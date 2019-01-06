@@ -147,10 +147,9 @@ function git_acp() {
     if [[ $BRNCH = 'master' ]]
     then
         echo "you are on master branch"
-        printf "\n"
         echo "run 'git checkout -b branch_name' to create a new branch"
-        printf "\n"
         echo "make changes and re-run 'nanocd' with arguments"
+        printf "\n"
         exit 2
     fi
     git add .
@@ -193,29 +192,36 @@ then
     then
         msg="git add, commit, push for project:$PROJECT_NAME on host:$(hostname) FAILED"
         echo $msg
+        exit 2
     fi
     create_pr 2>&1 | tee -a $LOG_FILE
     if [[ $? -ne 0 ]]
     then
         msg="Pull request creation for project:$PROJECT_NAME on host:$(hostname) FAILED"
         echo $msg
+        exit 2
     fi
     merge_pr 2>&1 | tee -a $LOG_FILE
     if [[ $? -ne 0 ]]
     then
         msg="Merge pull request for project:$PROJECT_NAME on host:$(hostname) FAILED"
         echo $msg
+        exit 2
     fi
     FORCE=1
 fi
 
 
 # Step #1: Check if there are any new merged pull requests on the remote master branch
-touch $LOCK_FILE
-cd $LOCAL_CHECKOUT
-git fetch origin master 2>&1 | tee -a $BUILD_LOG_FILE
-updates=$(git log HEAD..origin/master --oneline | wc -l)
-echo "Updates: $updates" | tee -a $BUILD_LOG_FILE
+if [[ $? -ne 0 ]]
+    exit 2
+else
+    touch $LOCK_FILE
+    cd $LOCAL_CHECKOUT
+    git fetch origin master 2>&1 | tee -a $BUILD_LOG_FILE
+    updates=$(git log HEAD..origin/master --oneline | wc -l)
+    echo "Updates: $updates" | tee -a $BUILD_LOG_FILE
+fi
 
 
 # If there are updates pull them down, build, deploy + test.
