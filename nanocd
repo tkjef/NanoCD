@@ -143,8 +143,17 @@ function send_mail() {
 }
 
 function git_acp() {
-    git add .
     BRNCH=$(git branch | grep \* | cut -d ' ' -f2)
+    if [[ $BRNCH = 'master' ]]
+    then
+        echo "you are on master branch"
+        printf "\n"
+        echo "run 'git checkout -b branch_name' to create a new branch"
+        printf "\n"
+        echo "make changes and re-run 'nanocd' with arguments"
+        exit 2
+    fi
+    git add .
     git commit -m $BRNCH
     git push --set-upstream origin $BRNCH
 }
