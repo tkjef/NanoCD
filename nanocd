@@ -142,6 +142,13 @@ function send_mail() {
     fi
 }
 
+function git_acp() {
+    git add .
+    BRNCH=$(git branch | grep \* | cut -d ' ' -f2)
+    git commit -m $BRNCH
+    git push --set-upstream origin $BRNCH
+}
+
 function create_pr() {
     FEATURE_BRANCH=$(git branch 2>/dev/null | grep '^*' | colrm 1 2)
     hub pull-request -b master -h $FEATURE_BRANCH 2>/dev/null    # Install hub with 'brew install hub'
@@ -169,9 +176,15 @@ fi
 trap cleanup TERM INT QUIT EXIT
 
 
-# Step #0: Create pull request & merge to master if -p flag is set
+# Step #0: Run git add/commit/push, create pull request & merge to master if -p flag is set
 if [[ $PR_FLAG -gt 0 ]]
 then
+    git_acp 2>&1 | tee -a $LOG_FILE
+    if [[ $? -ne 0 ]]
+    then
+        msg="git add, commit, push for project:$PROJECT_NAME on host:$(hostname) FAILED"
+        echo $msg
+    fi
     create_pr 2>&1 | tee -a $LOG_FILE
     if [[ $? -ne 0 ]]
     then
