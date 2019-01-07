@@ -22,7 +22,7 @@ $ nanocd
 nanocd -r <repo> -l <local_checkout> [-b <build-script>] [-w <post-script>]
    [-m <email>] [-a <mail command>] [-t <mail command attach flag>]
    [-s <mail command subject flag] [-e <recipients flag>] [-n name] [-d <dir>] 
-   [-c <command>] [-f] [-v] [-h] [-p]
+   [-c <command>] [-f] [-v] [-h] [-p] [-z]
 
 REQUIRED ARGS:
 -r - git repository, eg https://github.com/myname/myproj.git (required)
@@ -42,6 +42,7 @@ OPTIONAL ARGS:
 -p - create pull request, merge pull request, set -f flag
 -i - timeout in seconds (default 86400, ie one day, does KILL one hour after that)
 -h - show help
+-z - when using an ssg (static site generator) this generates the public code to be committed (default=$SSG_BUILD_SCRIPT)
 
 EXAMPLES
 
