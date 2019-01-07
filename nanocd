@@ -8,6 +8,7 @@ set -o nounset
 # Defaults
 FORCE=0
 PR_FLAG=0
+SSG_FLAG=0
 VERBOSE=0
 REPO=""                                 # Set with -r option or can be hard-coded here
 LOCAL_CHECKOUT=""                       # Set with -l option or can be hard-coded here
@@ -18,6 +19,7 @@ TEST_COMMAND="parallel ::: ./test*"     # Install parallel with 'brew install pa
 MAIL_CMD="sendmail"
 MAIL_CMD_ATTACH_FLAG="-A"
 BUILD_SCRIPT=""
+SSG_BUILD_SCRIPT=""
 DEPLOY_SCRIPT=""
 TIMEOUT_S=86400
 PAGER=${PAGER:-less}
@@ -29,7 +31,7 @@ cat > /dev/stdout << END
 ${0} -r <repo> -l <local_checkout> [-b <build-script>] [-w <deploy-script>]
    [-m <email>] [-a <mail command>] [-t <mail command attach flag>]
    [-s <mail command subject flag] [-e <recipients flag>] [-n name] [-d <dir>] 
-   [-c <command>] [-f] [-v] [-h] [-p]
+   [-c <command>] [-f] [-v] [-h] [-p] [-z]
 
 REQUIRED ARGS:
 -r - git repository, eg https://github.com/myname/myproj.git (required)
@@ -49,6 +51,7 @@ OPTIONAL ARGS:
 -p - create pull request, merge pull request, set -f flag
 -i - timeout in seconds (default 86400, ie one day, does KILL one hour after that)
 -h - show help
+-z - when using an ssg (static site generator) this generates the public code to be committed (default=$SSG_BUILD_SCRIPT)
 
 EXAMPLES
 
@@ -68,7 +71,7 @@ END
 
 
 # Override defaults with commandline flags + options/arguments
-while getopts "h?vfpm:n:d:r:l:c:a:b:w:t:e:s:" opt
+while getopts "h?vfpm:n:d:r:l:c:a:b:w:t:e:s:z:" opt
 do
     case $opt in
         h|\?)
@@ -78,6 +81,7 @@ do
         v) VERBOSE=1 ;;
         f) FORCE=1 ;;
         p) PR_FLAG=1 ;;
+        z) SSG_BUILD_SCRIPT=$OPTARG;SSG_FLAG=1 ;;
         r) REPO=$OPTARG ;;
         m) EMAIL=$OPTARG ;;
         n) PROJECT_NAME=$OPTARG ;;
@@ -184,6 +188,18 @@ fi
 trap cleanup TERM INT QUIT EXIT
 
 
+# If $SSG_FLAG set then generate files to git add
+if [[ $SSG_FLAG -gt 0 ]]
+then
+    $SSG_BUILD_SCRIPT 2>&1 | tee -a "$LOG_FILE"
+    if [[ $? -ne 0 ]]
+    then
+        msg="SSG build script for project:$PROJECT_NAME on host:$(hostname) FAILED"
+        echo $msg
+    fi
+fi
+
+
 # Step #0: Run git add/commit/push, create pull request & merge to master if -p flag is set
 if [[ $PR_FLAG -gt 0 ]]
 then
@@ -247,9 +263,9 @@ then
     # Step #4: Run deploy script
     $DEPLOY_SCRIPT 2>&1 | tee -a "$LOG_FILE"
     if [[ $? -ne 0 ]]
-	then
-		msg="Deploy script for project:$PROJECT_NAME on host:$(hostname) FAILED"
-	    echo $msg
+    then
+        msg="Deploy script for project:$PROJECT_NAME on host:$(hostname) FAILED"
+        echo $msg
     fi
 
     # Step #5: Run test script(s)
