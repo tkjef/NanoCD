@@ -41,8 +41,8 @@ OPTIONAL ARGS:
 -v - verbose logging (default off)
 -p - create pull request, merge pull request, set -f flag
 -i - timeout in seconds (default 86400, ie one day, does KILL one hour after that)
--h - show help
 -z - when using an ssg (static site generator) this generates the public code to be committed (default=$SSG_BUILD_SCRIPT)
+-h - show help
 
 EXAMPLES
 
