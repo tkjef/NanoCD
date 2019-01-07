@@ -1,6 +1,10 @@
 # Changelog
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## [0.3.1] - 2019-01-06
+### Added
+-z flag for SSG (Static Site Generator) build script
+
 ## [0.3] - 2019-01-05
 ### Added
 Added step for git add/commit/push workflow to be automated  
