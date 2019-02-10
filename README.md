@@ -107,30 +107,11 @@ portions MIT © [tkjef][tkjef]
 ## Project Roadmap
 
 Version 0.4  
-    -add automatic Version tagging with Github  
+    -add integrity check to make sure it's the correct pull request being used.
+    -check for edge cases like if there was no pull request, or it was merged to master already.
+    -check repo being deployed to in deploy script and error if in wrong directory/repo
+    -add aws profile check
 
 Version 0.5  
-    -add better integrity check on pull request being used to cover any edge cases  
-    -add artifact versioning using Github, Artifactory or Nexus  
-
-Version 0.6  
-    -add rollback to previous version or specific version capability  
-
-Version 0.7  
-    -set generic deploy script to aws s3 that only uploads files that were added/edited,  
-    removes files that were removed  
-    -add better testing options  
-
-Version 0.8  
-    -add automatic promotion to envs, deploy to specific env  
+    -sync github>gitlab && gitlab>github
     -add slack alerts  
-
-Version 0.9  
-    -add mute/unmute monitoring alerts option for:  
-    datadog, newrelic, grafana, pagerduty, opsgenie, victorops or custom script.  
-
-Version 1.0  
-    -polish step-based workflow  
-
-Version 1.1  
-    -add advanced load test templates  
