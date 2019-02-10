@@ -107,11 +107,11 @@ portions MIT © [tkjef][tkjef]
 ## Project Roadmap
 
 Version 0.4  
-    -add integrity check to make sure it's the correct pull request being used.
-    -check for edge cases like if there was no pull request, or it was merged to master already.
-    -check repo being deployed to in deploy script and error if in wrong directory/repo
-    -add aws profile check
+    -add integrity check to make sure it's the correct pull request being used.  
+    -check for edge cases like if there was no pull request, or it was merged to master already  
+    -check repo being deployed to in deploy script and error if in wrong directory/repo  
+    -add aws profile check  
 
 Version 0.5  
-    -sync github>gitlab && gitlab>github
-    -add slack alerts  
+    -sync github>gitlab && gitlab>github  
+    -add slack alerts     
