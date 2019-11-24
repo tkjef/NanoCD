@@ -1,4 +1,4 @@
-git-cd (currently in the middle of changing name from NanoCD)
+NanoCD
 =======
 
 NanoCD framework in bash for Mac. Checks git for updates, deploys code, runs tests, mails you on completion.  
