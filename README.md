@@ -2,7 +2,6 @@ NanoCD
 =======
 
 NanoCD framework in bash for Mac. Checks git for updates, deploys code, runs tests, mails you on completion.  
-Allows for promotion to next env.  
 
 Dependencies for Mac. Install parallel, timeout + hub with the below:  
 ```
