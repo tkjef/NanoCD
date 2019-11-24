@@ -87,17 +87,14 @@ After pull request is merged run the below:
 
 ## Authors
 
-Maintained by [tkjef][tkjef] (<yo@tkjef.com>) and a growing community of [contributors][contributors]. Forked from [cheapci][cheapci].
+Maintained by [tkjef][tkjef] (<yo@tkjef.com>). Forked from [cheapci][cheapci].
 
 ## License
 
 MIT License, (see [LICENSE][license])  
-MIT © [ianmiell][ianmiell]  
-portions MIT © [tkjef][tkjef]  
 
 [contributors]: https://github.com/tkjef/nanocd/graphs/contributors
 [tkjef]: https://github.com/tkjef
-[ianmiell]: https://github.com/ianmiell
 [cheapci]: https://github.com/ianmiell/cheapci
 [issues]: https://github.com/tkjef/nanocd/issues
 [license]: https://github.com/tkjef/nanocd/blob/master/LICENSE
@@ -108,10 +105,5 @@ portions MIT © [tkjef][tkjef]
 
 Version 0.4  
     -add integrity check to make sure it's the correct pull request being used.  
-    -check for edge cases like if there was no pull request, or it was merged to master already  
+    -throw error if there was no pull request, or it was merged to master already  
     -check repo being deployed to in deploy script and error if in wrong directory/repo  
-    -add aws profile check  
-
-Version 0.5  
-    -sync github>gitlab && gitlab>github  
-    -add slack alerts     
