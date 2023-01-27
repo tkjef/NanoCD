@@ -12,7 +12,10 @@ brew install hub
 
 NanoCD Installation:  
 ```
-(cd /usr/local/bin && curl -O https://github.com/tkjef/NanoCD/blob/master/nanocd)
+mkdir ~/.nanocd
+echo 'export PATH="~/.nanocd:$PATH"' >> ~/.bashrc
+curl https://raw.githubusercontent.com/tkjef/NanoCD/master/nanocd -o ~/.nanocd/nanocd
+chmod +x ~/.nanocd/nanocd
 ```
 
 Usage:  
